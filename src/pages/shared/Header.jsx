@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/Logo.svg'
+import { AuthContext } from '../../provider/AuthProvider';
 
 const Header = () => {
+  const {user, logOut}=useContext(AuthContext)
+
+  const handleLogOut=()=>{
+  logOut()
+  .then(res=>{
+
+  })
+  .catch(err=>{
+    
+  })
+  }
     return (
         <>
            <div className="navbar bg-black  bg-opacity-25">
@@ -51,7 +63,7 @@ const Header = () => {
     </ul>
   </div>
   <div className="navbar-end">
-  <div className="flex-none">
+  <div className="flex gap-2 items-center">
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle">
         <div className="indicator">
@@ -69,23 +81,29 @@ const Header = () => {
         </div>
       </div>
     </div>
-    <div className="dropdown dropdown-end">
-      <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
-          <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-        </div>
-      </label>
-      <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-        <li>
-          <a className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </a>
-        </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
-      </ul>
+ {
+  user?
+  <>   <div className="dropdown dropdown-end">
+  <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+    <div className="w-10 rounded-full">
+      <img src="https://picsum.photos/200/300" />
     </div>
+  </label>
+  <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+    <li>
+      <a className="justify-between">
+        Profile
+        <span className="badge">New</span>
+      </a>
+    </li>
+    <li><a>Settings</a></li>
+    <li><a onClick={handleLogOut}>Logout</a></li>
+  </ul>
+</div></> :
+<>  <div className="">
+    <Link to='/userlogin' className='btn'>Login</Link>
+  </div></>
+ }
   </div>
   </div>
 </div>
